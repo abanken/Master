@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HamburgerDemo</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
+    <string name="txtSplash">Andrew Banken\'s Hamburger Demo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
