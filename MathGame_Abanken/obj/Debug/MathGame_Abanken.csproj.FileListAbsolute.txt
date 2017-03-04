@@ -37,6 +37,5 @@ C:\Projects\MathGame_Abanken\MathGame_Abanken\obj\Debug\android\assets\System.Ru
 C:\Projects\MathGame_Abanken\MathGame_Abanken\obj\Debug\android\assets\System.ServiceModel.Internals.dll.mdb
 C:\Projects\MathGame_Abanken\MathGame_Abanken\obj\Debug\android\assets\System.Xml.dll.mdb
 C:\Projects\MathGame_Abanken\MathGame_Abanken\obj\Debug\android\assets\System.Xml.Linq.dll.mdb
-C:\Projects\MathGame_Abanken\MathGame_Abanken\obj\Debug\MathGame_Abanken.csprojResolveAssemblyReference.cache
 C:\Projects\MathGame_Abanken\MathGame_Abanken\obj\Debug\MathGame_Abanken.dll.mdb
 C:\Projects\MathGame_Abanken\MathGame_Abanken\bin\Debug\MathGame_Abanken.dll.mdb
