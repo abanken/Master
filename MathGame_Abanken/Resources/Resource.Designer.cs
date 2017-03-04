@@ -67,7 +67,10 @@ namespace MathGame_Abanken
 			public const int Dashes = 2131034121;
 			
 			// aapt resource value: 0x7f05000c
-			public const int ScoreBtn = 2131034124;
+			public const int NewGameBtn = 2131034124;
+			
+			// aapt resource value: 0x7f05000d
+			public const int ScoreBtn = 2131034125;
 			
 			// aapt resource value: 0x7f05000a
 			public const int answer = 2131034122;
@@ -81,8 +84,8 @@ namespace MathGame_Abanken
 			// aapt resource value: 0x7f050003
 			public const int incorrectAnswers = 2131034115;
 			
-			// aapt resource value: 0x7f050010
-			public const int newGame = 2131034128;
+			// aapt resource value: 0x7f050011
+			public const int newGame = 2131034129;
 			
 			// aapt resource value: 0x7f050006
 			public const int number1 = 2131034118;
@@ -96,11 +99,11 @@ namespace MathGame_Abanken
 			// aapt resource value: 0x7f050005
 			public const int score = 2131034117;
 			
-			// aapt resource value: 0x7f050011
-			public const int scoreBut = 2131034129;
+			// aapt resource value: 0x7f050012
+			public const int scoreBut = 2131034130;
 			
-			// aapt resource value: 0x7f05000d
-			public const int scorelist = 2131034125;
+			// aapt resource value: 0x7f05000e
+			public const int scorelist = 2131034126;
 			
 			// aapt resource value: 0x7f050000
 			public const int tableLayout = 2131034112;
@@ -108,11 +111,11 @@ namespace MathGame_Abanken
 			// aapt resource value: 0x7f050001
 			public const int tableRow = 2131034113;
 			
-			// aapt resource value: 0x7f05000e
-			public const int title = 2131034126;
-			
 			// aapt resource value: 0x7f05000f
-			public const int titlepicture = 2131034127;
+			public const int title = 2131034127;
+			
+			// aapt resource value: 0x7f050010
+			public const int titlepicture = 2131034128;
 			
 			// aapt resource value: 0x7f050002
 			public const int wrongAnswersLbl = 2131034114;

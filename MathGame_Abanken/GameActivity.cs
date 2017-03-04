@@ -12,7 +12,6 @@ using Android.Widget;
 
 namespace MathGame_Abanken.Resources.layout
 {
-
     [Activity(Label = "GameActivity")]
     public class GameActivity : Activity
     {
@@ -21,16 +20,18 @@ namespace MathGame_Abanken.Resources.layout
             base.OnCreate(savedInstanceState);
 
             SetContentView(Resource.Layout.gameScreen);
-           
-           
+
+
             TextView number1 = FindViewById<TextView>(Resource.Id.number1);
             TextView number2 = FindViewById<TextView>(Resource.Id.number2);
             TextView operatorSign = FindViewById<TextView>(Resource.Id.operatorSign);
             Button answerBtn = FindViewById<Button>(Resource.Id.answerBtn);
             Button ScoreBtn = FindViewById<Button>(Resource.Id.ScoreBtn);
+            Button NewGameBtn = FindViewById<Button>(Resource.Id.NewGameBtn);
             EditText answer = FindViewById<EditText>(Resource.Id.answer);
             TextView incorrectAnswers = FindViewById<TextView>(Resource.Id.incorrectAnswers);
             TextView scores = FindViewById<TextView>(Resource.Id.score);
+
 
             Random rnd = new Random();
             int start1 = rnd.Next(1, 15);
@@ -39,10 +40,10 @@ namespace MathGame_Abanken.Resources.layout
             int strike = 0;
             int score = 0;
             var c = 0;
-            number2.Text = "" + start1;
-            number1.Text = "" + start2;
+            number1.Text = "" + start1;
+            number2.Text = "" + start2;
 
-            operatorSign.Text = "+" ;
+            operatorSign.Text = "+";
 
             answerBtn.Click += (s, e) =>
             {
@@ -59,8 +60,9 @@ namespace MathGame_Abanken.Resources.layout
                             string toast = string.Format("correct");
                             Toast.MakeText(this, toast, ToastLength.Short).Show();
                             score++;
-                          
+
                             scores.Text = "" + score;
+                            answer.SetText("", TextView.BufferType.Editable);
                         }
                         else
                         {
@@ -68,19 +70,21 @@ namespace MathGame_Abanken.Resources.layout
                             Toast.MakeText(this, toast, ToastLength.Short).Show();
                             strike++;
                             incorrectAnswers.Text = "" + strike;
+                            answer.SetText("", TextView.BufferType.Editable);
                         }
                         c++;
                         operatorSign.Text = "-";
                     }
                     else if (c == 1)
                     {
-                        sum = start1 - start2;
+                        sum = start2 - start1;
                         if (ansED == sum)
                         {
                             string toast = string.Format("correct");
                             Toast.MakeText(this, toast, ToastLength.Short).Show();
                             score++;
                             scores.Text = "" + score;
+                            answer.SetText("", TextView.BufferType.Editable);
                         }
                         else
                         {
@@ -88,6 +92,7 @@ namespace MathGame_Abanken.Resources.layout
                             Toast.MakeText(this, toast, ToastLength.Short).Show();
                             strike++;
                             incorrectAnswers.Text = "" + strike;
+                            answer.SetText("", TextView.BufferType.Editable);
                         }
                         c++;
                         operatorSign.Text = "*";
@@ -101,6 +106,7 @@ namespace MathGame_Abanken.Resources.layout
                             Toast.MakeText(this, toast, ToastLength.Short).Show();
                             score++;
                             scores.Text = "" + score;
+                            answer.SetText("", TextView.BufferType.Editable);
                         }
                         else
                         {
@@ -108,6 +114,7 @@ namespace MathGame_Abanken.Resources.layout
                             Toast.MakeText(this, toast, ToastLength.Short).Show();
                             strike++;
                             incorrectAnswers.Text = "" + strike;
+                            answer.SetText("", TextView.BufferType.Editable);
                         }
                         c = 0;
                         operatorSign.Text = "+";
@@ -116,12 +123,18 @@ namespace MathGame_Abanken.Resources.layout
                     start2 = rnd.Next(1, 15);
                     number2.Text = "" + start1;
                     number1.Text = "" + start2;
+
+                    answerBtn.Visibility = ViewStates.Visible;
+                    NewGameBtn.Enabled = false;
                 }
                 else
                 {
                     string toast = string.Format("You lose");
                     Toast.MakeText(this, toast, ToastLength.Long).Show();
                     answerBtn.Enabled = false;
+                    NewGameBtn.Enabled = true;
+                    NewGameBtn.Visibility = ViewStates.Visible;
+                    answerBtn.Visibility = ViewStates.Invisible;
 
                     var highscores = Application.Context.GetSharedPreferences("High Scores", FileCreationMode.Private);
                     var scoreEdit = highscores.Edit();
@@ -131,6 +144,25 @@ namespace MathGame_Abanken.Resources.layout
 
                 }
             };
+
+            NewGameBtn.Click += (s, e) =>
+            {
+                answerBtn.Enabled = true;
+                answerBtn.Visibility = ViewStates.Visible;
+                NewGameBtn.Visibility = ViewStates.Invisible;
+                start1 = rnd.Next(1, 15);
+                start2 = rnd.Next(1, 15);
+                number2.Text = "" + start1;
+                number1.Text = "" + start2;
+                c = 0;
+                strike = 0;
+                sum = 0;
+                incorrectAnswers.Text = "" + strike;
+                score = 0;
+                scores.Text = "" + score;
+
+            };
+
             ScoreBtn.Click += (s, e) =>
             {
                 var intent = new Intent(this, typeof(ScoreActivity));
