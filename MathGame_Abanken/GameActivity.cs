@@ -47,127 +47,141 @@ namespace MathGame_Abanken.Resources.layout
 
             answerBtn.Click += (s, e) =>
             {
-                answerBtn.Text = "Submit Answer";
-                double ansED = Double.Parse(answer.Text);
-                double snum = Double.Parse(incorrectAnswers.Text);
-                if (snum < 4)
+                if (answer.Length() <= 0)
                 {
-                    if (c == 0)
-                    {
-                        sum = start1 + start2;
-                        if (ansED == sum)
-                        {
-                            string toast = string.Format("correct");
-                            Toast.MakeText(this, toast, ToastLength.Short).Show();
-                            score++;
+                    //EditText is empty
+                    string toast = string.Format("Input error, Answer Field empty");
+                    Toast.MakeText(this, toast, ToastLength.Short).Show();
+                    answer.SetText("", TextView.BufferType.Editable);
+               }
+                else 
+                {
+                    //EditText is not empty
+                    answerBtn.Text = "Submit Answer";
+                    double ansED = Double.Parse(answer.Text);
+                    double snum = Double.Parse(incorrectAnswers.Text);
 
-                            scores.Text = "" + score;
-                            answer.SetText("", TextView.BufferType.Editable);
-                        }
-                        else
-                        {
-                            string toast = string.Format("wrong: " + sum);
-                            Toast.MakeText(this, toast, ToastLength.Short).Show();
-                            strike++;
-                            incorrectAnswers.Text = "" + strike;
-                            answer.SetText("", TextView.BufferType.Editable);
-                        }
-                        c++;
-                        operatorSign.Text = "-";
-                    }
-                    else if (c == 1)
+
+                    if (snum < 4)
                     {
-                        sum = start2 - start1;
-                        if (ansED == sum)
+                        if (c == 0)
                         {
-                            string toast = string.Format("correct");
-                            Toast.MakeText(this, toast, ToastLength.Short).Show();
-                            score++;
-                            scores.Text = "" + score;
-                            answer.SetText("", TextView.BufferType.Editable);
+                            sum = start1 + start2;
+                            if (ansED == sum)
+                            {
+                                string toast = string.Format("correct");
+                                Toast.MakeText(this, toast, ToastLength.Short).Show();
+                                score++;
+
+                                scores.Text = "" + score;
+                                answer.SetText("", TextView.BufferType.Editable);
+                            }
+                            else
+                            {
+                                string toast = string.Format("wrong: " + sum);
+                                Toast.MakeText(this, toast, ToastLength.Short).Show();
+                                strike++;
+                                incorrectAnswers.Text = "" + strike;
+                                answer.SetText("", TextView.BufferType.Editable);
+                            }
+                            c++;
+                            operatorSign.Text = "-";
                         }
-                        else
+                        else if (c == 1)
                         {
-                            string toast = string.Format("wrong: " + sum);
-                            Toast.MakeText(this, toast, ToastLength.Short).Show();
-                            strike++;
-                            incorrectAnswers.Text = "" + strike;
-                            answer.SetText("", TextView.BufferType.Editable);
+                            sum = start2 - start1;
+                            if (ansED == sum)
+                            {
+                                string toast = string.Format("correct");
+                                Toast.MakeText(this, toast, ToastLength.Short).Show();
+                                score++;
+                                scores.Text = "" + score;
+                                answer.SetText("", TextView.BufferType.Editable);
+                            }
+                            else
+                            {
+                                string toast = string.Format("wrong: " + sum);
+                                Toast.MakeText(this, toast, ToastLength.Short).Show();
+                                strike++;
+                                incorrectAnswers.Text = "" + strike;
+                                answer.SetText("", TextView.BufferType.Editable);
+                            }
+                            c++;
+                            operatorSign.Text = "*";
                         }
-                        c++;
-                        operatorSign.Text = "*";
+                        else if (c == 2)
+                        {
+                            sum = start1 * start2;
+                            if (ansED == sum)
+                            {
+                                string toast = string.Format("correct");
+                                Toast.MakeText(this, toast, ToastLength.Short).Show();
+                                score++;
+                                scores.Text = "" + score;
+                                answer.SetText("", TextView.BufferType.Editable);
+                            }
+                            else
+                            {
+                                string toast = string.Format("wrong: " + sum);
+                                Toast.MakeText(this, toast, ToastLength.Short).Show();
+                                strike++;
+                                incorrectAnswers.Text = "" + strike;
+                                answer.SetText("", TextView.BufferType.Editable);
+                            }
+                            c = 0;
+                            operatorSign.Text = "+";
+                        }
+                        start1 = rnd.Next(1, 15);
+                        start2 = rnd.Next(1, 15);
+                        number2.Text = "" + start1;
+                        number1.Text = "" + start2;
+
+                        answerBtn.Visibility = ViewStates.Visible;
+                        NewGameBtn.Enabled = false;
                     }
-                    else if (c == 2)
+                    else
                     {
-                        sum = start1 * start2;
-                        if (ansED == sum)
-                        {
-                            string toast = string.Format("correct");
-                            Toast.MakeText(this, toast, ToastLength.Short).Show();
-                            score++;
-                            scores.Text = "" + score;
-                            answer.SetText("", TextView.BufferType.Editable);
-                        }
-                        else
-                        {
-                            string toast = string.Format("wrong: " + sum);
-                            Toast.MakeText(this, toast, ToastLength.Short).Show();
-                            strike++;
-                            incorrectAnswers.Text = "" + strike;
-                            answer.SetText("", TextView.BufferType.Editable);
-                        }
-                        c = 0;
-                        operatorSign.Text = "+";
+                        string toast = string.Format("You lose");
+                        Toast.MakeText(this, toast, ToastLength.Long).Show();
+                        answerBtn.Enabled = false;
+                        NewGameBtn.Enabled = true;
+                        NewGameBtn.Visibility = ViewStates.Visible;
+                        answerBtn.Visibility = ViewStates.Invisible;
+
+                        var highscores = Application.Context.GetSharedPreferences("High Scores", FileCreationMode.Private);
+                        var scoreEdit = highscores.Edit();
+                        string sscore = score.ToString();
+                        scoreEdit.PutString("Score", sscore);
+                        scoreEdit.Commit();
+
                     }
+                }
+                };
+
+                NewGameBtn.Click += (s, e) =>
+                {
+                    answerBtn.Enabled = true;
+                    answerBtn.Visibility = ViewStates.Visible;
+                    NewGameBtn.Visibility = ViewStates.Invisible;
                     start1 = rnd.Next(1, 15);
                     start2 = rnd.Next(1, 15);
                     number2.Text = "" + start1;
                     number1.Text = "" + start2;
+                    c = 0;
+                    strike = 0;
+                    sum = 0;
+                    incorrectAnswers.Text = "" + strike;
+                    score = 0;
+                    scores.Text = "" + score;
 
-                    answerBtn.Visibility = ViewStates.Visible;
-                    NewGameBtn.Enabled = false;
-                }
-                else
+                };
+
+                ScoreBtn.Click += (s, e) =>
                 {
-                    string toast = string.Format("You lose");
-                    Toast.MakeText(this, toast, ToastLength.Long).Show();
-                    answerBtn.Enabled = false;
-                    NewGameBtn.Enabled = true;
-                    NewGameBtn.Visibility = ViewStates.Visible;
-                    answerBtn.Visibility = ViewStates.Invisible;
-
-                    var highscores = Application.Context.GetSharedPreferences("High Scores", FileCreationMode.Private);
-                    var scoreEdit = highscores.Edit();
-                    string sscore = score.ToString();
-                    scoreEdit.PutString("Score", sscore);
-                    scoreEdit.Commit();
-
-                }
-            };
-
-            NewGameBtn.Click += (s, e) =>
-            {
-                answerBtn.Enabled = true;
-                answerBtn.Visibility = ViewStates.Visible;
-                NewGameBtn.Visibility = ViewStates.Invisible;
-                start1 = rnd.Next(1, 15);
-                start2 = rnd.Next(1, 15);
-                number2.Text = "" + start1;
-                number1.Text = "" + start2;
-                c = 0;
-                strike = 0;
-                sum = 0;
-                incorrectAnswers.Text = "" + strike;
-                score = 0;
-                scores.Text = "" + score;
-
-            };
-
-            ScoreBtn.Click += (s, e) =>
-            {
-                var intent = new Intent(this, typeof(ScoreActivity));
-                StartActivity(intent);
-            };
-        }
+                    var intent = new Intent(this, typeof(ScoreActivity));
+                    StartActivity(intent);
+                };
+            
+            }
     }
 }
